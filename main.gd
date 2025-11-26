@@ -22,11 +22,12 @@ func _ready() -> void:
 	$"왼쪽패널".size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.size = Vector2(vp_size.x/2 - 짧은길이/2, vp_size.y)
 	$오른쪽패널.position = Vector2(vp_size.x/2 + 짧은길이/2, 0)
-	$OmniLight3D.position = WorldSize/2 + Vector3(0,0,WorldSize.length())
+
+	$OmniLight3D.position = Vector3(0,0,WorldSize.length())
 	$OmniLight3D.omni_range = WorldSize.length()*2
 	$FixedCameraLight.set_center_pos_far(
-		WorldSize/2,
-		Vector3(WorldSize.x/2, WorldSize.y/2, WorldSize.x),
+		Vector3.ZERO,
+		Vector3(0, 0, WorldSize.x),
 		WorldSize.length()*2)
 
 	var msgrect = Rect2( vp_size.x * 0.1 ,vp_size.y * 0.4 , vp_size.x * 0.8 , vp_size.y * 0.25 )
@@ -49,7 +50,9 @@ func _ready() -> void:
 				lerp( lerp(Color.RED, Color.YELLOW, irate) , lerp(Color.GOLD, Color.PINK, irate), jrate),
 				lerp( lerp(Color.GREEN, Color.BLUE, irate) , lerp(Color.CYAN, Color.MAGENTA, irate), jrate),
 				)
-			bg.position = Vector3(i+0.5, 0.5,j + 0.5 -WorldSize.z/2)
+			bg.position = -WorldSize/2 + Vector3(i, 0, j)
+
+			bg.set_current_value(WorldSize.y/2)
 			gauge_list.append(bg)
 			add_child(bg)
 
@@ -90,13 +93,15 @@ func message_hidden(_s :String) -> void:
 
 func _process(_delta: float) -> void:
 	label_demo()
-	for bg in gauge_list:
-		bg.inc_current_value(randi_range(-1,1))
+	for i in gauge_list.size()/10:
+		var bg = gauge_list.pick_random()
+		bg.inc_current_value( [-1,1].pick_random() )
+
 	main_animation.handle_animation()
 	if $MovingCameraLightHober.is_current_camera():
-		$MovingCameraLightHober.move_hober_around_z(WorldSize/2, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
+		$MovingCameraLightHober.move_hober_around_z(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
 	elif $MovingCameraLightAround.is_current_camera():
-		$MovingCameraLightAround.move_around_y(WorldSize/2, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
+		$MovingCameraLightAround.move_around_y(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
 
 func _on_카메라변경_pressed() -> void:
 	MovingCameraLight.NextCamera()
