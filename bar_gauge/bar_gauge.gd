@@ -11,10 +11,10 @@ func init(count :int, sz :Vector3, co1 :Color, co2 :Color) -> BarGauge:
 	max_value = count
 	current_value = max_value
 
-	var mesh = BoxMesh.new()
+	var mesh := BoxMesh.new()
 	mesh.size = Vector3(sz.x, sz.y / count /1.1 , sz.z)
 
-	$MultiMeshShape.init(mesh, Color(Color.WHITE, 0.5), count, Vector3.ZERO)
+	$MultiMeshShape.init(mesh, Color(Color.WHITE, 1.0), count, Vector3.ZERO)
 	for i in count:
 		var rate := (i as float) / (count as float)
 		var pos3d := Vector3(0,rate*sz.y,0) # grow upward

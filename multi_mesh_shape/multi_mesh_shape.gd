@@ -4,7 +4,7 @@ class_name MultiMeshShape
 var m_mesh :MultiMesh
 
 func init(mesh :Mesh, co :Color, count :int, pos :Vector3) -> MultiMeshShape:
-	var mat = StandardMaterial3D.new()
+	var mat := StandardMaterial3D.new()
 	mat.albedo_color = co
 	if co.a != 1.0:
 		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
@@ -20,7 +20,7 @@ func init(mesh :Mesh, co :Color, count :int, pos :Vector3) -> MultiMeshShape:
 	$".".multimesh = m_mesh
 	for i in m_mesh.visible_instance_count:
 		#m_mesh.set_instance_color(i,Color.WHITE)
-		var t = Transform3D(Basis(), pos)
+		var t := Transform3D(Basis(), pos)
 		m_mesh.set_instance_transform(i,t)
 	return self
 
@@ -31,12 +31,12 @@ func get_visible_count() -> int:
 	return m_mesh.visible_instance_count
 
 func set_inst_rotation(i :int, axis :Vector3, rot :float) -> void:
-	var t = m_mesh.get_instance_transform(i)
+	var t := m_mesh.get_instance_transform(i)
 	t = t.rotated_local(axis, rot)
 	m_mesh.set_instance_transform(i,t )
 
 func set_inst_pos(i :int, pos :Vector3) -> void:
-	var t = m_mesh.get_instance_transform(i)
+	var t := m_mesh.get_instance_transform(i)
 	t.origin = pos
 	m_mesh.set_instance_transform(i,t )
 
