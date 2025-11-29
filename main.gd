@@ -1,6 +1,6 @@
 extends Node3D
 
-const WorldSize := Vector3(32,64,32)
+const WorldSize := Vector3(32,32,32)
 const AnimationDuration := 1.0
 
 var main_animation := Animation3D.new()
@@ -41,15 +41,18 @@ func _ready() -> void:
 	$TimedMessage.show_message("",0)
 
 	$AxisArrow3D.set_size(10)
+	var gaprate := 0.5
+	var alpha := 0.5
 	for i in WorldSize.x:
 		var irate := float(i) / WorldSize.z
 		for j in WorldSize.z:
 			var jrate := float(j) / WorldSize.z
 			var bg = preload("res://bar_gauge/bar_gauge.tscn").instantiate().init(
-				WorldSize.y, Vector3(0.9, WorldSize.y, 0.9),
+				WorldSize.y, Vector3( 1- gaprate, WorldSize.y, 1-gaprate),
 				lerp( lerp(Color.RED, Color.YELLOW, irate) , lerp(Color.GOLD, Color.PINK, irate), jrate),
 				lerp( lerp(Color.GREEN, Color.BLUE, irate) , lerp(Color.CYAN, Color.MAGENTA, irate), jrate),
-				0.5,
+				alpha,
+				gaprate
 				)
 			bg.position = -WorldSize/2 + Vector3(i, 0, j)
 
@@ -73,8 +76,8 @@ func animate_gauge_wave() -> void:
 		for j in WorldSize.z:
 			var bg = gauge_list[j*int(WorldSize.z)+i]
 			bg.set_current_rate(
-				((sin( now*2 + i/WorldSize.x ) + 1) / 4.0) +
-				((cos( now*3 + j/WorldSize.z ) + 1) / 4.0)
+				((sin( now*2 + i/WorldSize.x*PI ) + 1) / 4.0) +
+				((cos( now*3 + j/WorldSize.z*PI ) + 1) / 4.0)
 				)
 
 func wallbox_demo() -> void:

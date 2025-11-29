@@ -7,12 +7,12 @@ signal zero_reached( b :BarGauge)
 var max_value :int
 var current_value :int
 
-func init(count :int, sz :Vector3, co1 :Color, co2 :Color, alpha :float = 1.0) -> BarGauge:
+func init(count :int, sz :Vector3, co1 :Color, co2 :Color, alpha :float = 1.0 , gaprate :float = 0.1) -> BarGauge:
 	max_value = count
 	current_value = max_value
 
 	var mesh := BoxMesh.new()
-	mesh.size = Vector3(sz.x, sz.y / count /1.1 , sz.z)
+	mesh.size = Vector3(sz.x, sz.y / count * (1-gaprate) , sz.z)
 
 	$MultiMeshShape.init(mesh, Color(Color.WHITE, alpha), count, Vector3.ZERO)
 	for i in count:

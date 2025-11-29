@@ -31,3 +31,7 @@ window/size/mode=3
 [physics]
 
 3d/run_on_separate_thread=true
+
+[rendering]
+
+occlusion_culling/use_occlusion_culling=true
