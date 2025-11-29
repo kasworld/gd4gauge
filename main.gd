@@ -1,6 +1,6 @@
 extends Node3D
 
-const WorldSize := Vector3(40,22,20)
+const WorldSize := Vector3(32,64,32)
 const AnimationDuration := 1.0
 
 var main_animation := Animation3D.new()
@@ -49,6 +49,7 @@ func _ready() -> void:
 				WorldSize.y, Vector3(0.9, WorldSize.y, 0.9),
 				lerp( lerp(Color.RED, Color.YELLOW, irate) , lerp(Color.GOLD, Color.PINK, irate), jrate),
 				lerp( lerp(Color.GREEN, Color.BLUE, irate) , lerp(Color.CYAN, Color.MAGENTA, irate), jrate),
+				0.5,
 				)
 			bg.position = -WorldSize/2 + Vector3(i, 0, j)
 
@@ -60,6 +61,21 @@ func _ready() -> void:
 
 	main_animation.animation_ended.connect(main_animation_ended)
 	start_all_animation()
+
+func animate_gauge_rand() -> void:
+	for i in gauge_list.size()/10:
+		var bg = gauge_list.pick_random()
+		bg.inc_current_value( [-1,1].pick_random() )
+
+func animate_gauge_wave() -> void:
+	var now := Time.get_unix_time_from_system()
+	for i in WorldSize.x:
+		for j in WorldSize.z:
+			var bg = gauge_list[j*int(WorldSize.z)+i]
+			bg.set_current_rate(
+				((sin( now*2 + i/WorldSize.x ) + 1) / 4.0) +
+				((cos( now*3 + j/WorldSize.z ) + 1) / 4.0)
+				)
 
 func wallbox_demo() -> void:
 	$WallBox.mesh.size = WorldSize #+ Vector3(1,1,5)
@@ -93,10 +109,7 @@ func message_hidden(_s :String) -> void:
 
 func _process(_delta: float) -> void:
 	label_demo()
-	for i in gauge_list.size()/10:
-		var bg = gauge_list.pick_random()
-		bg.inc_current_value( [-1,1].pick_random() )
-
+	animate_gauge_wave()
 	main_animation.handle_animation()
 	if $MovingCameraLightHober.is_current_camera():
 		$MovingCameraLightHober.move_hober_around_z(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
