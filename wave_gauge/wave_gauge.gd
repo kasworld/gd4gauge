@@ -1,15 +1,16 @@
 extends Node3D
 class_name WaveGauge
 
-var gauge_list :Array
-var box_size :Vector3
-var count :Vector3i
-var color_list := [
+static var color_list := [
 	Color.RED, Color.YELLOW,
 	Color.GOLD, Color.PINK,
 	Color.GREEN, Color.BLUE,
 	Color.CYAN, Color.MAGENTA,
 ]
+
+var gauge_list :Array
+var box_size :Vector3
+var count :Vector3i
 func init(sz :Vector3, counta :Vector3i, co_list :Array = color_list, gaprate :float = 0.5, alpha :float = 0.5) -> WaveGauge:
 	box_size = sz
 	count = counta
