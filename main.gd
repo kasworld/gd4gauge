@@ -39,8 +39,10 @@ func _ready() -> void:
 	$TimedMessage.show_message("",0)
 
 	$AxisArrow3D.set_size(10)
+
 	$WaveGauge.init(WorldSize, Vector3i(WorldSize), WaveGauge.color_list, 0.1, 1.0 )
 	#$WaveGauge.init(WorldSize, Vector3i(WorldSize), WaveGauge.color_list, 0.1, 0.99 )
+	#$WaveGauge.set_all_rate()
 
 	wallbox_demo()
 

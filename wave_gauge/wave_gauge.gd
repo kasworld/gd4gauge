@@ -32,6 +32,11 @@ func init(sz :Vector3, counta :Vector3i, co_list :Array = color_list, gaprate :f
 			add_child(bg)
 	return self
 
+# for debug
+func set_all_rate(rate :float = 1.0) -> void:
+	for bg in gauge_list:
+		bg.set_current_rate(rate)
+
 func animate_wave(speed1 :float =2, speed2:float=3, len1 :float = PI, len2 :float = PI) -> void:
 	var now := Time.get_unix_time_from_system()
 	var nowspeed1 := now*speed1
