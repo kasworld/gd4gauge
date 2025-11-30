@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6maulcewyhy5"]
+[gd_scene load_steps=11 format=3 uid="uid://c6maulcewyhy5"]
 
 [ext_resource type="Script" uid="uid://bgj25qi5j8dgh" path="res://main.gd" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://dl14flc0fkeyt" path="res://axis_arrow3d/axis_arrow_3d.tscn" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://dr21303f5q2mm" path="res://wave_gauge/wave_gauge.tscn" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://c6cct2gj2a3im" path="res://timed_message/timed_message.tscn" id="5_lquwl"]
 [ext_resource type="PackedScene" uid="uid://ces3a6yv0c5fi" path="res://moving_carmera_light/moving_camera_light.tscn" id="8_5vw27"]
 
@@ -90,3 +91,5 @@ theme = SubResource("Theme_7mycd")
 [node name="MovingCameraLightAround" parent="." instance=ExtResource("8_5vw27")]
 
 [node name="MovingCameraLightHober" parent="." instance=ExtResource("8_5vw27")]
+
+[node name="WaveGauge" parent="." instance=ExtResource("5_7mycd")]

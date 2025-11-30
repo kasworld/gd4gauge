@@ -13,8 +13,6 @@ func start_rotate_animation(nd :Node3D, axis :int, ani_dur :float) -> void:
 func start_all_animation() -> void:
 	pass
 
-var gauge_list :Array
-
 func _ready() -> void:
 	get_viewport().size_changed.connect(on_viewport_size_changed)
 	var vp_size = get_viewport().get_visible_rect().size
@@ -41,44 +39,13 @@ func _ready() -> void:
 	$TimedMessage.show_message("",0)
 
 	$AxisArrow3D.set_size(10)
-	var gaprate := 0.5
-	var alpha := 0.5
-	for i in WorldSize.x:
-		var irate := float(i) / WorldSize.z
-		for j in WorldSize.z:
-			var jrate := float(j) / WorldSize.z
-			var bg = preload("res://bar_gauge/bar_gauge.tscn").instantiate().init(
-				WorldSize.y, Vector3( 1- gaprate, WorldSize.y, 1-gaprate),
-				lerp( lerp(Color.RED, Color.YELLOW, irate) , lerp(Color.GOLD, Color.PINK, irate), jrate),
-				lerp( lerp(Color.GREEN, Color.BLUE, irate) , lerp(Color.CYAN, Color.MAGENTA, irate), jrate),
-				alpha,
-				gaprate
-				)
-			bg.position = -WorldSize/2 + Vector3(i, 0, j)
-
-			bg.set_current_value(WorldSize.y/2)
-			gauge_list.append(bg)
-			add_child(bg)
+	$WaveGauge.init(WorldSize)
 
 	wallbox_demo()
 
 	main_animation.animation_ended.connect(main_animation_ended)
 	start_all_animation()
 
-func animate_gauge_rand() -> void:
-	for i in gauge_list.size()/10:
-		var bg = gauge_list.pick_random()
-		bg.inc_current_value( [-1,1].pick_random() )
-
-func animate_gauge_wave() -> void:
-	var now := Time.get_unix_time_from_system()
-	for i in WorldSize.x:
-		for j in WorldSize.z:
-			var bg = gauge_list[j*int(WorldSize.z)+i]
-			bg.set_current_rate(
-				((sin( now*2 + i/WorldSize.x*PI ) + 1) / 4.0) +
-				((cos( now*3 + j/WorldSize.z*PI ) + 1) / 4.0)
-				)
 
 func wallbox_demo() -> void:
 	$WallBox.mesh.size = WorldSize #+ Vector3(1,1,5)
@@ -112,7 +79,7 @@ func message_hidden(_s :String) -> void:
 
 func _process(_delta: float) -> void:
 	label_demo()
-	animate_gauge_wave()
+	$WaveGauge.animate_wave()
 	main_animation.handle_animation()
 	if $MovingCameraLightHober.is_current_camera():
 		$MovingCameraLightHober.move_hober_around_z(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
