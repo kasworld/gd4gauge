@@ -27,12 +27,12 @@ func init(sz :Vector3, co_list :Array = color_list, gaprate :float = 0.5, alpha 
 			add_child(bg)
 	return self
 
-func animate_wave() -> void:
+func animate_wave(speed1 :float =2, speed2:float=3, len1 :float = PI, len2 :float = PI) -> void:
 	var now := Time.get_unix_time_from_system()
 	for i in box_size.x:
 		for j in box_size.z:
 			var bg = gauge_list[j*int(box_size.z)+i]
 			bg.set_current_rate(
-				((sin( now*2 + i/box_size.x*PI ) + 1) / 4.0) +
-				((cos( now*3 + j/box_size.z*PI ) + 1) / 4.0)
+				((sin( now*speed1 + i/box_size.x*len1 ) + 1) / 4.0) +
+				((cos( now*speed2 + j/box_size.z*len2 ) + 1) / 4.0)
 				)
