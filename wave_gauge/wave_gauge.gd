@@ -33,12 +33,16 @@ func init(sz :Vector3, counta :Vector3i, co_list :Array = color_list, gaprate :f
 
 func animate_wave(speed1 :float =2, speed2:float=3, len1 :float = PI, len2 :float = PI) -> void:
 	var now := Time.get_unix_time_from_system()
+	var nowspeed1 := now*speed1
+	var nowspeed2 := now*speed2
+	var len1x := len1 / count.x
+	var len2z := len2 / count.z
 	for i in count.x:
-		var irate := float(i) / count.x
+		var irate := float(i) * len1x
 		for j in count.z:
-			var jrate := float(j) / count.z
+			var jrate := float(j) * len2z
 			var bg = gauge_list[j*count.z+i]
 			bg.set_current_rate(
-				((sin( now*speed1 + irate*len1 ) + 1.0) / 4.0) +
-				((cos( now*speed2 + jrate*len2 ) + 1.0) / 4.0)
+				((sin( nowspeed1 + irate ) + 1.0) / 4.0) +
+				((cos( nowspeed2 + jrate ) + 1.0) / 4.0)
 				)
