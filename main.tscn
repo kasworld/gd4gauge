@@ -75,7 +75,6 @@ layout_mode = 2
 autowrap_mode = 3
 
 [node name="WallBox" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("BoxMesh_ig7tw")
 
 [node name="TimedMessage" parent="." instance=ExtResource("5_lquwl")]

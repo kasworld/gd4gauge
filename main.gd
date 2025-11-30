@@ -39,7 +39,7 @@ func _ready() -> void:
 	$TimedMessage.show_message("",0)
 
 	$AxisArrow3D.set_size(10)
-	$WaveGauge.init(WorldSize)
+	$WaveGauge.init(WorldSize, Vector3i(WorldSize) )
 
 	wallbox_demo()
 
@@ -48,8 +48,8 @@ func _ready() -> void:
 
 
 func wallbox_demo() -> void:
-	$WallBox.mesh.size = WorldSize #+ Vector3(1,1,5)
-	$WallBox.position = WorldSize/2 + Vector3(0,0,-WorldSize.z/2)
+	$WallBox.mesh.size = WorldSize
+	#$WallBox.position = Vector3(0,0,-WorldSize.z/2)
 	$WallBox.mesh.material.albedo_color = Color(random_color(), 0.5)
 
 func random_color()->Color:
