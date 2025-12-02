@@ -47,7 +47,7 @@ func animate_wave(speed1 :float =2, speed2:float=3, len1 :float = PI, len2 :floa
 		var irate := float(i) * len1x
 		for j in count.z:
 			var jrate := float(j) * len2z
-			var bg = gauge_list[j*count.z+i]
+			var bg = gauge_list[i*count.z+j]
 			bg.set_current_rate(
 				((sin( nowspeed1 + irate ) + 1.0) / 4.0) +
 				((cos( nowspeed2 + jrate ) + 1.0) / 4.0)

@@ -82,8 +82,6 @@ mesh = SubResource("BoxMesh_ig7tw")
 self_modulate = Color(1, 1, 1, 0.498039)
 theme = SubResource("Theme_7mycd")
 
-[node name="DemoContainer" type="Node3D" parent="."]
-
 [node name="AxisArrow3D" parent="." instance=ExtResource("4_1bvp3")]
 
 [node name="FixedCameraLight" parent="." instance=ExtResource("8_5vw27")]
