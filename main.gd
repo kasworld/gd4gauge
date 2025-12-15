@@ -1,6 +1,6 @@
 extends Node3D
 
-const WorldSize := Vector3(64,32,32)
+const WorldSize := Vector3(64,64,32)
 #const WorldSize := Vector3(32,32,32)
 const AnimationDuration := 1.0
 

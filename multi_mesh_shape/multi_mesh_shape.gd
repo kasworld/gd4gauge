@@ -1,20 +1,41 @@
 extends MultiMeshInstance3D
 class_name MultiMeshShape
 
-static func 집중선만들기(r :float, start:float, end:float, depth :float, count :int, co :Color) -> MultiMeshShape:
+func init_집중선(r :float, start:float, end:float, depth :float, count :int, co :Color) -> MultiMeshShape:
 	var 구분선 := BoxMesh.new()
 	var 길이 := r*(end-start)
 	구분선.size = Vector3(길이, depth/10, depth )
 	var cell각도 := 2.0*PI / count
 	var radius := r-길이/2
-	var mms :MultiMeshShape = preload("res://multi_mesh_shape/multi_mesh_shape.tscn").instantiate().init_with_color(
-		구분선, Color.WHITE, count)
+	init_with_color(구분선, Color.WHITE, count)
 	for i in count:
 		var rad := cell각도 *i + cell각도/2
-		mms.set_inst_rotation(i, Vector3.BACK, rad)
-		mms.set_inst_pos(i, Vector3(cos(rad) *radius,sin(rad) *radius, 0) )
-		mms.set_inst_color(i, co)
-	return mms
+		set_inst_rotation(i, Vector3.BACK, rad)
+		set_inst_pos(i, Vector3(cos(rad) *radius,sin(rad) *radius, 0) )
+		set_inst_color(i, co)
+	return self
+
+func init_wire_net(net_size :Vector2, wire_count :Vector2i, wire_radius :float, co :Color) -> MultiMeshShape:
+	var 선 := BoxMesh.new()
+	var count := wire_count.x + wire_count.y
+	init_with_color(선, Color.WHITE, count)
+	for i in count:
+		multimesh.set_instance_color(i,co)
+		if i < wire_count.x:
+			var pos := Vector3( net_size.x/(wire_count.x-1)* i, net_size.y/2, 0)
+			var t := Transform3D(Basis(), pos)
+			#t = t.rotated(Vector3(0,1,0), bar_rot)
+			t = t.scaled_local( Vector3(wire_radius,net_size.y,wire_radius) )
+			multimesh.set_instance_transform(i,t)
+		else:
+			var pos := Vector3(net_size.x/2, net_size.y/(wire_count.y-1)* (i-wire_count.x), 0)
+			var t := Transform3D(Basis(), pos)
+			#t = t.rotated(Vector3(0,1,0), bar_rot)
+			t = t.scaled_local( Vector3(net_size.x,wire_radius,wire_radius) )
+			multimesh.set_instance_transform(i,t)
+	return self
+
+
 
 func _init_multimesh(mesh :Mesh, mat :Material) -> void:
 	mesh.material = mat
