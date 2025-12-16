@@ -1,7 +1,6 @@
 extends Node3D
 
-const WorldSize := Vector3(64,64,32)
-#const WorldSize := Vector3(32,32,32)
+const WorldSize := Vector3(32,32,32)
 const AnimationDuration := 1.0
 
 var main_animation := Animation3D.new()
@@ -84,7 +83,7 @@ func message_hidden(_s :String) -> void:
 func _process(_delta: float) -> void:
 	label_demo()
 	$WaveGauge.animate_wave()
-	main_animation.handle_animation()
+	#main_animation.handle_animation()
 	if $MovingCameraLightHober.is_current_camera():
 		$MovingCameraLightHober.move_hober_around_z(Vector3.ZERO, (WorldSize.x+WorldSize.y)/2, WorldSize.length()*0.6 )
 	elif $MovingCameraLightAround.is_current_camera():
